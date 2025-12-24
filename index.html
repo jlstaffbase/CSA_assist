@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-        :root { --navy-blue: #004C91; --navy-gold: #FFC72C; --white: #ffffff; }
-
-        body { font-family: 'Roboto', sans-serif; margin: 0; padding: 10px; }
-
+        :root {
+            --navy-blue: #004C91;
+            --navy-gold: #FFC72C;
+            --widget-bg: #f0f8ff; /* Alice Blue */
+        }
+        body { font-family: 'Roboto', sans-serif; margin: 0; padding: 10px; background: transparent; }
         .cockpit-container {
-            background: var(--white);
+            background: var(--widget-bg);
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid #cbd5e0;
-            width: 100%; /* Fully Responsive */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(0, 76, 145, 0.2);
+            width: 100%;
             box-sizing: border-box;
             overflow: hidden;
         }
-
         .brand-header {
             background: var(--navy-blue);
             color: white;
@@ -29,52 +30,41 @@
             justify-content: space-between;
             border-bottom: 3px solid var(--navy-gold);
         }
-
-        .nav-pills { display: flex; background: #f1f5f9; border-bottom: 1px solid #cbd5e0; overflow-x: auto; }
+        .nav-pills { display: flex; background: rgba(0, 76, 145, 0.05); border-bottom: 1px solid rgba(0, 76, 145, 0.1); }
         .pill {
             flex: 1; padding: 14px 8px; border: none; background: transparent;
             color: var(--navy-blue); font-size: 11px; font-weight: 700;
-            cursor: pointer; text-transform: uppercase; white-space: nowrap;
+            cursor: pointer; text-transform: uppercase;
         }
-        .pill.active { background: var(--white); border-top: 3px solid var(--navy-blue); }
-
-        .content-pane { padding: 15px; min-height: 300px; display: none; box-sizing: border-box; }
+        .pill.active { background: var(--widget-bg); border-top: 3px solid var(--navy-blue); }
+        .content-pane { padding: 15px; min-height: 320px; display: none; }
         .content-pane.active { display: block; }
-
         .data-row {
-            padding: 10px 0;
+            padding: 12px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #edf2f7;
-            flex-wrap: wrap; /* Allows stacking on mobile */
+            border-bottom: 1px solid rgba(0, 76, 145, 0.1);
+            flex-wrap: wrap;
             gap: 10px;
         }
-
-        .data-label { font-size: 13px; flex: 1; min-width: 140px; }
-
-        /* Accordion */
+        .data-value { font-weight: 700; color: var(--navy-blue); }
         .accordion-header {
             width: 100%; padding: 12px 0; background: none; border: none;
             text-align: left; font-weight: 700; color: var(--navy-blue);
             display: flex; justify-content: space-between; cursor: pointer;
+            border-bottom: 1px solid rgba(0, 76, 145, 0.1);
         }
         .accordion-content {
-            display: none; padding: 12px; background: #f0f7ff;
-            border-left: 4px solid var(--navy-blue); font-size: 13px;
+            display: none; padding: 12px; background: rgba(255,255,255,0.6);
+            border-left: 4px solid var(--navy-blue); font-size: 13px; font-style: italic; margin-top: 5px;
         }
-
         .copy-btn { font-size: 10px; background: var(--navy-blue); color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
-
-        @media (max-width: 400px) {
-            .brand-header { flex-direction: column; gap: 5px; }
-            .pill { font-size: 9px; padding: 10px 4px; }
-        }
     </style>
 </head>
 <body>
 <div class="cockpit-container">
-    <div class="brand-header"><span>AGENT REFERENCE</span><span style="color:var(--navy-gold)">PREMIER SERVICE</span></div>
+    <div class="brand-header"><span>MEMBER-FIRST ASSIST</span><span style="color:var(--navy-gold)">PREMIER SERVICE</span></div>
     <div class="nav-pills">
         <button id="pill-rates" class="pill active" onclick="switchTab('rates')">Rates</button>
         <button id="pill-scripts" class="pill" onclick="switchTab('scripts')">Scripts</button>
@@ -82,25 +72,25 @@
     </div>
 
     <div id="rates" class="content-pane active">
-        <div class="data-row"><span class="data-label">VA Home Loan (30Y)</span><span><b>6.25%</b> <button class="copy-btn" onclick="copy('6.25%')">Copy</button></span></div>
-        <div class="data-row"><span class="data-label">Active Duty Auto</span><span><b>4.99%</b> <button class="copy-btn" onclick="copy('4.99%')">Copy</button></span></div>
-        <div class="data-row"><span class="data-label">Share Cert (12 Mo)</span><span><b>5.30%</b> <button class="copy-btn" onclick="copy('5.30%')">Copy</button></span></div>
+        <div class="data-row"><span>VA Home Loan (30Y)</span><span><b class="data-value">6.25%</b> <button class="copy-btn" onclick="copy('6.25%')">Copy</button></span></div>
+        <div class="data-row"><span>Active Duty Auto Loan</span><span><b class="data-value">4.99%</b> <button class="copy-btn" onclick="copy('4.99%')">Copy</button></span></div>
+        <div class="data-row"><span>12-Month Share Cert</span><span><b class="data-value">5.30%</b> <button class="copy-btn" onclick="copy('5.30%')">Copy</button></span></div>
     </div>
 
     <div id="scripts" class="content-pane">
         <div class="accordion-item">
-            <button class="accordion-header" onclick="toggle('s1')">Member Greeting <span>+</span></button>
-            <div id="s1" class="accordion-content">"Thank you for your service. This is [Name], how can I assist you?" <button class="copy-btn" style="width:100%;margin-top:10px" onclick="copy('Greeting')">Copy</button></div>
+            <button class="accordion-header" onclick="toggle('s1')">PCS / Military Move <span>+</span></button>
+            <div id="s1" class="accordion-content">"I see you are preparing for a PCS move. I can help set up your travel notifications." <button class="copy-btn" style="width:100%;margin-top:10px" onclick="copy('PCS Script')">Copy</button></div>
         </div>
         <div class="accordion-item">
             <button class="accordion-header" onclick="toggle('s2')">Fraud Protocol <span>+</span></button>
-            <div id="s2" class="accordion-content">"I am securing your accounts immediately. Let's verify your transactions." <button class="copy-btn" style="width:100%;margin-top:10px" onclick="copy('Fraud')">Copy</button></div>
+            <div id="s2" class="accordion-content">"I am immediately securing your accounts. Let's verify your transactions." <button class="copy-btn" style="width:100%;margin-top:10px" onclick="copy('Fraud Script')">Copy</button></div>
         </div>
     </div>
 
     <div id="faq" class="content-pane">
-        <div class="data-row"><span>ROUTING NUMBER</span><span><b>256074112</b> <button class="copy-btn" onclick="copy('256074112')">Copy</button></span></div>
-        <div class="data-row"><span>INTL WIRE FEE</span><span><b>$25.00</b> <button class="copy-btn" onclick="copy('$25.00')">Copy</button></span></div>
+        <div class="data-row"><span>ROUTING NUMBER</span><span><b class="data-value">256074112</b> <button class="copy-btn" onclick="copy('256074112')">Copy</button></span></div>
+        <div class="data-row"><span>WIRE FEE (INTL)</span><span><b class="data-value">$25.00</b> <button class="copy-btn" onclick="copy('$25.00')">Copy</button></span></div>
     </div>
 </div>
 
